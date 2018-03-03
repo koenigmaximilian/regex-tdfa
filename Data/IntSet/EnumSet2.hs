@@ -7,9 +7,11 @@ import Data.Monoid(Monoid(..))
 newtype EnumSet e = EnumSet {unEnumSet :: S.IntSet}
   deriving (Eq,Ord,Read,Show)
 
+instance Semigroup (EnumSet e) where
+  EnumSet x <> EnumSet y = EnumSet (x <> y)
+
 instance Monoid (EnumSet e) where
   mempty = EnumSet mempty
-  EnumSet x `mappend` EnumSet y = EnumSet (x `mappend` y)
 
 (\\) :: (Enum e) => EnumSet e -> EnumSet e -> EnumSet e
 (\\) (EnumSet s1) (EnumSet s2) = EnumSet ((S.\\) s1 s2)

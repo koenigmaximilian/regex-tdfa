@@ -18,9 +18,11 @@ unsafeChr = chr
 
 newtype CharMap a = CharMap {unCharMap :: M.IntMap a} deriving (Eq,Ord,Read,Show)
 
+instance Semigroup (CharMap a) where
+  CharMap x <> CharMap y = CharMap (x <> y)
+
 instance Monoid (CharMap a) where
   mempty = CharMap mempty
-  CharMap x `mappend` CharMap y = CharMap (x `mappend` y)
 
 instance Functor CharMap where
   fmap f (CharMap m) = CharMap (fmap f m)

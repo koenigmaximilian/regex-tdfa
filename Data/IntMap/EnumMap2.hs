@@ -10,9 +10,11 @@ import qualified Prelude as L (map)
 newtype EnumMap k a = EnumMap {unEnumMap :: M.IntMap a}
   deriving (Eq,Ord,Read,Show)
 
+instance Ord k => Semigroup (EnumMap k a) where
+  EnumMap x <> EnumMap y = EnumMap (x <> y)
+
 instance Ord k => Monoid (EnumMap k a) where
   mempty = EnumMap mempty
-  EnumMap x `mappend` EnumMap y = EnumMap (x `mappend` y)
 
 instance Ord k => Functor (EnumMap k) where
   fmap f (EnumMap m) = EnumMap (fmap f m)
